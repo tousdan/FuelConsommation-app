@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical">
+	<ListView android:id="@+id/list_view" 
+	     android:layout_width="wrap_content"
+		 android:layout_height="0dip"
+		 android:layout_weight="1">
+	    
+	</ListView>
+    
+	<LinearLayout android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content">
+		<Button android:text="@string/add_new_entry"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" 
+		    android:onClick="showAddForm"/>
+		<Button android:text="@string/clear_all_entries"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" 
+		    android:onClick="clearEntries"/>    
+	</LinearLayout>
+	
+
+</LinearLayout>

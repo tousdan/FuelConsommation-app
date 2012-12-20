@@ -1,0 +1,36 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DisplayMessageActivity"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/kilometers_odo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/form_kilometers_hint"
+        android:inputType="number" />
+    
+    <EditText
+        android:id="@+id/liters_filled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/form_liters_hint"
+        android:inputType="numberDecimal" />
+    
+    <EditText
+        android:id="@+id/price_per_liter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/form_price_per_liter_hint"
+        android:inputType="numberDecimal" />
+    
+    <Button 
+        android:text="@string/form_submit_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:onClick="onAddNewEntry"/>
+
+</LinearLayout>

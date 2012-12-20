@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Consomation auto</string>
+    <string name="menu_settings">Settings</string>
+    <string name="add_new_entry">Ajouter +</string>
+    <string name="clear_all_entries">Effacer pleins</string>
+    
+    <string name="title_activity_add_form">Ajouter un nouveau plein</string>
+    
+    <string name="form_kilometers_hint">KM sur l\'odometre avant plein</string>
+    <string name="form_liters_hint">Litres d\'essence du plein</string>
+    <string name="form_price_per_liter_hint">Prix par litre</string>
+    <string name="form_submit_entry">Confirmer le plein</string>
+    
+    <string name="error_kilometer_not_a_valid_value">KM n\'a pas une valeur acceptee (doit etre > 0)</string>
+    <string name="error_liters_not_a_valid_value">Litres d\'essence n\'est pas valide (doit etre > 0)</string>
+    <string name="error_price_per_liter_not_a_valid_value">Le prix par litre n\'est pas valide (doit etre > 0)</string>
+    
+    <string name="success_new_entry">Nouveau plein entrer avec succes!</string>
+    
+
+</resources>
