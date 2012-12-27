@@ -4,6 +4,22 @@
         android:id="@+id/menu_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/menu_settings"/>
+        android:title="@string/menu_settings" android:visible="true"/>
+    
+    <item android:id="@+id/menu_add_plein" 
+        android:orderInCategory="1" 
+        android:titleCondensed="@string/add_new_entry_short" 
+        android:title="@string/add_new_entry_short" 
+        android:visible="true"
+        android:showAsAction="always|withText" 
+        android:icon="@drawable/ic_gaspump"></item>
+    
+    <item android:id="@+id/menu_add_vehicule" 
+        android:orderInCategory="2" 
+        android:titleCondensed="@string/add_new_vehicule" 
+        android:title="@string/add_new_vehicule" 
+        android:visible="true" 
+        android:enabled="true" 
+        android:showAsAction="always" ></item>
 
 </menu>

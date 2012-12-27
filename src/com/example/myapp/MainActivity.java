@@ -3,13 +3,17 @@ package com.example.myapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tousdan.db.FuelConsumptionContract;
@@ -23,8 +27,15 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_main);
+                       
         
+        ListView list = (ListView) findViewById(R.id.list_view);
         
+        TextView noEntries = new TextView(this);
+        
+        noEntries.setText(R.string.no_entries);
+        
+        list.setEmptyView(noEntries);
         
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, null, new String[] {
         		FuelConsumptionContract.GasEntry.COLUMN_NAME_KILOMETERS_ODOMETER,
@@ -33,20 +44,19 @@ public class MainActivity extends Activity {
         		android.R.id.text1, 
         		android.R.id.text2
         }, SimpleCursorAdapter.NO_SELECTION);
-        
-        ListView list = (ListView) findViewById(R.id.list_view);
-        
+
         list.setAdapter(adapter);
         
         refreshListView();
-        
-        
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+    	MenuInflater inflater = getMenuInflater();
+    	
+        inflater.inflate(R.menu.activity_main, menu);
+        
         return true;
     }
     
@@ -64,7 +74,21 @@ public class MainActivity extends Activity {
     	Log.i(TAG, "Resumed");
     }
     
-    public void showAddForm(View view) {
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+    	MenuItem add_plein = menu.findItem(R.id.menu_add_plein);
+    	FuelConsumptionDbHelper helper = new FuelConsumptionDbHelper(this);
+    	
+    	SQLiteDatabase db = helper.getReadableDatabase();
+    	
+    	//Pas de pleins si il y a pas de vehicules.
+    	add_plein.setEnabled(DatabaseUtils.queryNumEntries(db, FuelConsumptionContract.VehicleEntry.TABLE_NAME) > 0);
+    	
+    	return true;
+    }
+    
+    public void showAddForm() {
     	Intent intent = new Intent(this, AddNewGasEntryActivity.class);
     	
     	startActivityForResult(intent, 0);
@@ -109,6 +133,17 @@ public class MainActivity extends Activity {
         
     	adapter.changeCursor(cursor);
     	
+    }
+    
+    @Override 
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    		case R.id.menu_add_plein:
+    			showAddForm();
+    			return true;
+    	}
+    	
+    	return super.onOptionsItemSelected(item);
     }
     
 }
