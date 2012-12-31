@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.tousdan.db.FuelConsumptionContract;
 
-public class NewEntryTask extends AsyncTask<ContentValues, Void, Long> {
+public class NewEntryTask extends AsyncTask<ContentValues, Void, AsyncTaskResult<Long, Void>> {
 	public final static String TAG = "NewEntryTask";
 	
 	private SQLiteDatabase db;
@@ -16,10 +16,10 @@ public class NewEntryTask extends AsyncTask<ContentValues, Void, Long> {
 	}
 	
 	@Override
-	protected Long doInBackground(ContentValues... params) {
+	protected AsyncTaskResult<Long, Void> doInBackground(ContentValues... params) {
 		Log.i(TAG, "About to insert entry...");
 		
-		return db.insert(FuelConsumptionContract.GasEntry.TABLE_NAME, null, params[0]);
+		return new AsyncTaskSuccess<Long, Void>(db.insert(FuelConsumptionContract.GasEntry.TABLE_NAME, null, params[0]));
 	}
 
 }

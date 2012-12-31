@@ -8,7 +8,7 @@ import android.util.Log;
 public class FuelConsumptionDbHelper extends SQLiteOpenHelper {
 	public final static String TAG = "FuelConsumptionDbHelper";
 	
-	public static final int DATABASE_VERSION = 4;
+	public static final int DATABASE_VERSION = 1;
 	public static final String DATABASE_NAME = "FuelConsumption.db";
 	
 	private static final String COMMA_SEP = ",";
@@ -39,7 +39,7 @@ public class FuelConsumptionDbHelper extends SQLiteOpenHelper {
 	    		FuelConsumptionContract.VehicleEntry._ID + " INTEGER PRIMARY KEY," +
 	    		FuelConsumptionContract.VehicleEntry.COLUMN_NAME_DATE_ADDED + DATE_TYPE + COMMA_SEP +
 	    		FuelConsumptionContract.VehicleEntry.COLUMN_NAME_DATE_LAST_MODIFIED + DATE_TYPE + COMMA_SEP +
-	    		FuelConsumptionContract.VehicleEntry.COLUMN_NAME_NAME + STRING_TYPE +
+	    		FuelConsumptionContract.VehicleEntry.COLUMN_NAME_NAME + STRING_TYPE + "UNIQUE" +
 	    " )";
 	
 	private static final String SQL_DELETE_VEHICULE_ENTRIES =
