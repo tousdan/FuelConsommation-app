@@ -9,24 +9,25 @@
     <string name="add_new_vehicule">Nouveau Vehicule</string>
     <string name="clear_all_entries">Effacer pleins</string>
     <string name="title_activity_add_form">Ajouter un nouveau plein</string>
-    
+
+    <!-- Gas entry activity -->
     <string name="form_kilometers_hint">KM sur l\'odometre avant plein</string>
     <string name="form_liters_hint">Litres d\'essence du plein</string>
     <string name="form_price_per_liter_hint">Prix par litre</string>
     <string name="form_submit_entry">Confirmer le plein</string>
-
     <string name="error_kilometer_not_a_valid_value">KM n\'a pas une valeur acceptee (doit etre > 0)</string>
     <string name="error_liters_not_a_valid_value">Litres d\'essence n\'est pas valide (doit etre > 0)</string>
     <string name="error_price_per_liter_not_a_valid_value">Le prix par litre n\'est pas valide (doit etre > 0)</string>
+    <string name="error_no_vehicule_selected">Un vehicule doit etre selectionner.</string>
     <string name="success_new_entry">Nouveau plein entrer avec succes!</string>
     <string name="no_entries">Aucun plein enregistrer</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_vehicule">AddVehiculeActivity</string>
-    
+
     <!-- Vehicule activity -->
     <string name="vehicule_name_hint">Nom du vehicule</string>
     <string name="vehicule_add_action">Ajouter vehicule</string>
-    
     <string name="error_empty_vehicule_name">Nom du vehicule requis</string>
+    <string name="title_activity_gas_entry_list_item_view">GasEntryListItemView</string>
 
 </resources>

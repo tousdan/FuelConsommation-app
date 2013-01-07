@@ -36,6 +36,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tousdan.app.MainActivity" />
         </activity>
+        <activity
+            android:name="com.tousdan.app.GasEntryListItemView"
+            android:label="@string/title_activity_gas_entry_list_item_view" >
+        </activity>
     </application>
 
 </manifest>

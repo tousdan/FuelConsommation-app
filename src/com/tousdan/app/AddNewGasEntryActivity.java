@@ -5,10 +5,14 @@ import java.util.concurrent.ExecutionException;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.tousdan.db.FuelConsumptionContract;
@@ -24,10 +28,50 @@ public class AddNewGasEntryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_add_form);
+		
+		Spinner vehicule_list = (Spinner) findViewById(R.id.vehicule_list);
+		
+		SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, null, new String[] {
+        		FuelConsumptionContract.VehicleEntry.COLUMN_NAME_NAME
+        }, new int[] {
+        		android.R.id.text1
+        }, SimpleCursorAdapter.NO_SELECTION);
+		
+		vehicule_list.setAdapter(adapter);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		Spinner vehicule_list = (Spinner) findViewById(R.id.vehicule_list);
+		SimpleCursorAdapter adapter = (SimpleCursorAdapter) vehicule_list.getAdapter();
+    	
+    	FuelConsumptionDbHelper helper = new FuelConsumptionDbHelper(this);
+        
+        SQLiteDatabase db = helper.getReadableDatabase();
+        
+        Cursor cursor = db.query(FuelConsumptionContract.VehicleEntry.TABLE_NAME, new String[] {
+        		FuelConsumptionContract.VehicleEntry._ID,
+        		FuelConsumptionContract.VehicleEntry.COLUMN_NAME_NAME
+        }, null, null, null, null, FuelConsumptionContract.VehicleEntry.COLUMN_NAME_NAME + " ASC");
+        
+    	adapter.changeCursor(cursor);
 	}
 	
 	public void onAddNewEntry(View view) {
 		//parse form data and validate.
+		Spinner sp = (Spinner) findViewById(R.id.vehicule_list);
+		
+		Cursor item = (Cursor) sp.getSelectedItem();
+		
+		if(item == null) {
+			showValidationError(getString(R.string.error_no_vehicule_selected));
+			return;
+		}
+		
+		long vehicule_id = item.getLong(item.getColumnIndex(FuelConsumptionContract.VehicleEntry.COLUMN_NAME_ID));
+		
 		String raw_kilometers = ((EditText) findViewById(R.id.kilometers_odo)).getText().toString();
 		int kilometers = tryParseInt(raw_kilometers, getString(R.string.error_kilometer_not_a_valid_value));
 		
@@ -50,13 +94,14 @@ public class AddNewGasEntryActivity extends Activity {
     	values.put(FuelConsumptionContract.GasEntry.COLUMN_NAME_KILOMETERS_ODOMETER, kilometers);
     	values.put(FuelConsumptionContract.GasEntry.COLUMN_NAME_LITERS, liters);
     	values.put(FuelConsumptionContract.GasEntry.COLUMN_NAME_PRICE_PER_LITER, ppl);
+    	values.put(FuelConsumptionContract.GasEntry.COLUMN_NAME_VEHICULE_ID, vehicule_id);
     	
     	Log.i(TAG, "About to start new entry task...");
     	
     	Long entryId;
     	try {
     		//this task \\cant\\ fail (yet).
-    		entryId = new NewEntryTask(new FuelConsumptionDbHelper(this).getReadableDatabase()).execute(values).get().getValue();
+    		entryId = new NewEntryTask(new FuelConsumptionDbHelper(this).getWritableDatabase()).execute(values).get().getValue();
 		} catch (InterruptedException e) {
 			Log.e(TAG, "Exception", e);
 			showValidationError("Error!");

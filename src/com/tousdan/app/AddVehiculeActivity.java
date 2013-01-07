@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.tousdan.db.FuelConsumptionContract;
+import com.tousdan.db.FuelConsumptionDbHelper;
 import com.tousdan.tasks.AsyncTaskResult;
 import com.tousdan.tasks.NewVehiculeTask;
 
@@ -22,9 +23,11 @@ public class AddVehiculeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_vehicule);
 		
+		setContentView(R.layout.activity_add_vehicule);
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,14 +41,12 @@ public class AddVehiculeActivity extends Activity {
 		
 		String vehiculeName = vehiculeNameComponent.getText().toString();	
 		
-		
-		
 		ContentValues values = new ContentValues();
 		values.put(FuelConsumptionContract.VehicleEntry.COLUMN_NAME_NAME, vehiculeName);
 		
 		AsyncTaskResult<Long, String> result;
 		try {
-			result = new NewVehiculeTask().execute(values).get();
+			result = new NewVehiculeTask(new FuelConsumptionDbHelper(this).getWritableDatabase()).execute(values).get();
 		} catch (InterruptedException e) {
 			Log.e(TAG, "Exception", e);
 			showValidationError("Error!");
